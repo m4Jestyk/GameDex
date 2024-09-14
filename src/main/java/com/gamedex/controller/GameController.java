@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/games")
+@CrossOrigin(origins = "http://localhost:5173")
 public class GameController {
 
     private final GameService gameService;
@@ -31,11 +32,11 @@ public class GameController {
             @RequestParam(required = false) String developer,
             @RequestParam(required = false) String producer,
             @RequestParam(required = false) String genre,
-            @RequestParam(required = false) String operatingSystem
+            @RequestParam(required = false) String operatingSystem,
+            @RequestParam(required = false) String date
     )
     {
 
-        System.out.println("Trying to find games....");
 
         if(name != null)
         {
@@ -52,9 +53,17 @@ public class GameController {
         } else if(operatingSystem != null)
         {
             return gameService.getGameByPlatform(operatingSystem);
-        } else {
+        } else if(date != null){
+            return gameService.getGameByDate(date);
+        }else {
             return gameService.getGames();
         }
+    }
+
+    @GetMapping("retro")
+    public List<Game> getRetroGames()
+    {
+        return gameService.getRetroGames();
     }
 
     @PutMapping

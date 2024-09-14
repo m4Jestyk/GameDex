@@ -55,6 +55,20 @@ public class GameService {
         return gameRepository.findAll().stream().filter(game -> game.getOperating_system().toLowerCase().contains(platform)).collect(Collectors.toList());
     }
 
+    public List<Game> getGameByDate(String date)
+    {
+        return gameRepository.findAll().stream().filter(game -> game.getDate().toLowerCase().contains(date)).collect(Collectors.toList());
+    }
+
+    public List<Game> getRetroGames()
+    {
+        return gameRepository.findRetro(
+                "arcade", "platform",
+                "atari", "nintendo",
+                "sega", "namco"
+        );
+    }
+
     public Game addGame(Game game)
     {
         gameRepository.save(game);

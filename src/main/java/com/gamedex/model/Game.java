@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Getter
 @Entity
-@Table(name = "games")
+@Table(name = "gamesnew")
 public class Game {
 
     @Id
