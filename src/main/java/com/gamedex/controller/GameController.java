@@ -1,6 +1,7 @@
 package com.gamedex.controller;
 
 
+import com.gamedex.dto.GameSearchRequest;
 import com.gamedex.model.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -64,6 +65,18 @@ public class GameController {
     public List<Game> getRetroGames()
     {
         return gameService.getRetroGames();
+    }
+
+    @PostMapping("customfind")
+    public ResponseEntity<List<Game>> findGames(@RequestBody GameSearchRequest req)
+    {
+        List<Game> games = gameService.customFind(
+                req.getName(),
+                req.getGenre(),
+                req.getPlatform(),
+                req.getDeveloper()
+        );
+        return ResponseEntity.ok(games);
     }
 
     @PutMapping

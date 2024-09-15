@@ -5,12 +5,15 @@ import jakarta.transaction.Transactional;
 import com.gamedex.model.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
+@Service
 public class GameService {
 
     private final GameRepository gameRepository;
@@ -67,6 +70,11 @@ public class GameService {
                 "atari", "nintendo",
                 "sega", "namco"
         );
+    }
+
+    public List<Game> customFind(String name, String genre, String platform, String developer)
+    {
+        return gameRepository.customFind(name, genre, platform, developer);
     }
 
     public Game addGame(Game game)
