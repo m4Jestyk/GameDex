@@ -2,6 +2,7 @@ package com.gamedex.controller;
 
 
 import com.gamedex.dto.GameSearchRequest;
+import com.gamedex.model.Admin;
 import com.gamedex.model.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/games")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://192.168.29.25:5173")
 public class GameController {
 
     private final GameService gameService;
@@ -77,6 +78,28 @@ public class GameController {
                 req.getDeveloper()
         );
         return ResponseEntity.ok(games);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Game> findGameById(@PathVariable long id)
+    {
+        Game game = gameService.getSingleGame(id);
+        if(game != null)
+            return ResponseEntity.ok(game);
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("addgame")
+    public ResponseEntity<Game> addGame(@RequestBody Game newGame)
+    {
+        gameService.addGame(newGame);
+        return ResponseEntity.ok(newGame);
+    }
+
+    @PostMapping("auth")
+    public boolean auth(@RequestBody Admin req)
+    {
+        return gameService.auth(req);
     }
 
     @PutMapping

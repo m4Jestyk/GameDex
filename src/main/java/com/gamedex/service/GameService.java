@@ -1,6 +1,7 @@
 package com.gamedex.service;
 
 import com.gamedex.Repository.GameRepository;
+import com.gamedex.model.Admin;
 import jakarta.transaction.Transactional;
 import com.gamedex.model.Game;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
 @Service
 public class GameService {
+
 
     private final GameRepository gameRepository;
 
@@ -81,6 +84,18 @@ public class GameService {
     {
         gameRepository.save(game);
         return game;
+    }
+
+    public boolean auth(Admin req) {
+//        String hashedId = passwordEncoder.encode(req.getUserId());
+//        System.out.println(hashedId);
+//        String hashedPass = passwordEncoder.encode(req.getPassword());
+//        String hashedEnvId = passwordEncoder.encode(req.getEnvId());
+//        System.out.println(hashedEnvId);
+//        String hashedEnvPw = passwordEncoder.encode(req.getEnvPw());
+//
+//        return hashedId.equals(hashedEnvId) && hashedPass.equals(hashedEnvPw);
+        return req.getUserId().equals(req.getEnvId()) && req.getPassword().equals(req.getEnvPw());
     }
 
     public Game updateGame(Game game)
